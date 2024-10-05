@@ -1,0 +1,86 @@
+<<<<<<< HEAD
+<script>
+    //produk tv dengan harga 3 juta, kulkan dengan harga 4 juta
+    //ac dengan harga 5 juta
+    //seandainya dia membeli ac maka dapat diskon 10% sisanya tidak
+
+    let pelanggan = "Siti";
+    let produk = "AC";
+
+    // //tentukan harga masing-masing produk
+    // if(produk == "TV"){
+    //     harsat = 3000000;
+    // } else if(produk == "kulkas"){
+    //     harsat = 4000000;
+    // } else if(produk == "AC"){
+    //     harsat = 5000000;
+    // } else{
+    //     harsat = 0;
+    // }
+    let harsat = 0;
+    switch(produk){
+        case "TV": harsat = 3000000; break;
+        case "kulkas": harsat = 4000000; break;
+        case "AC": harsat = 5000000; break;
+        default: harsat = 0
+    }
+
+    //tentukan beli, total harga dan total diskon jika ada
+    let jmlBeli = 10;
+    let bruto = harsat * jmlBeli;
+    //buat ternary
+    let diskon = (produk == 'AC') ? 0.1 * bruto : 0;
+
+    document.write("Data Pembelian" +
+        "<br/> Nama Pelanggan : " + pelanggan +
+        "<br/>Produk yang dipilih : " + produk +
+        "<br/>Harga Satuan : " + harsat +
+        "<br/>Harga Kotor (bruto): " + bruto +
+        "<br/>Total Diskon : " + diskon
+        
+    )
+
+=======
+<script>
+    //produk tv dengan harga 3 juta, kulkan dengan harga 4 juta
+    //ac dengan harga 5 juta
+    //seandainya dia membeli ac maka dapat diskon 10% sisanya tidak
+
+    let pelanggan = "Siti";
+    let produk = "AC";
+
+    // //tentukan harga masing-masing produk
+    // if(produk == "TV"){
+    //     harsat = 3000000;
+    // } else if(produk == "kulkas"){
+    //     harsat = 4000000;
+    // } else if(produk == "AC"){
+    //     harsat = 5000000;
+    // } else{
+    //     harsat = 0;
+    // }
+    let harsat = 0;
+    switch(produk){
+        case "TV": harsat = 3000000; break;
+        case "kulkas": harsat = 4000000; break;
+        case "AC": harsat = 5000000; break;
+        default: harsat = 0
+    }
+
+    //tentukan beli, total harga dan total diskon jika ada
+    let jmlBeli = 10;
+    let bruto = harsat * jmlBeli;
+    //buat ternary
+    let diskon = (produk == 'AC') ? 0.1 * bruto : 0;
+
+    document.write("Data Pembelian" +
+        "<br/> Nama Pelanggan : " + pelanggan +
+        "<br/>Produk yang dipilih : " + produk +
+        "<br/>Harga Satuan : " + harsat +
+        "<br/>Harga Kotor (bruto): " + bruto +
+        "<br/>Total Diskon : " + diskon
+        
+    )
+
+>>>>>>> 7301d2e4efd3098c2bfa425c36e2062e54693608
+    </script>
