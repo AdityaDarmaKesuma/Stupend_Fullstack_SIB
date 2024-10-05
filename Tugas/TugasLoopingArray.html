@@ -1,0 +1,47 @@
+<script>
+    let s1 = {'nama': 'Ali', 'nilai': 80};
+    let s2 = {'nama': 'Budi', 'nilai': 70};
+    let s3 = {'nama': 'Citra', 'nilai': 90};
+    let s4 = {'nama': 'Diana', 'nilai': 50};
+    let s5 = {'nama': 'Eko', 'nilai': 30};
+
+    let siswa = [s1, s2, s3, s4, s5]; 
+
+    document.write('<table border="1">');
+    document.write('<tr><th>No</th><th>Nama</th><th>Nilai</th><th>Keterangan</th><th>Grade</th><th>Predikat</th></tr>');
+
+    for (let i = 0; i < siswa.length; i++) {
+        let nilai = siswa[i].nilai;
+        let keterangan = nilai > 60 ? "Lulus" : "Tidak Lulus";
+        let grade = "";
+        let predikat = "";
+
+        if (nilai >= 85 && nilai <= 100) {
+            grade = "A";
+            predikat = "Sangat Baik";
+        } else if (nilai >= 75 && nilai <= 84) {
+            grade = "B";
+            predikat = "Baik";
+        } else if (nilai >= 60 && nilai <= 74) {
+            grade = "C";
+            predikat = "Cukup";
+        } else if (nilai >= 30 && nilai <= 59) {
+            grade = "D";
+            predikat = "Kurang";
+        } else if (nilai >= 0 && nilai <= 29) {
+            grade = "E";
+            predikat = "Sangat Kurang";
+        }
+
+        document.write('<tr>');
+        document.write('<td>' + (i + 1) + '</td>');
+        document.write('<td>' + siswa[i].nama + '</td>');
+        document.write('<td>' + siswa[i].nilai + '</td>');
+        document.write('<td>' + keterangan + '</td>');
+        document.write('<td>' + grade + '</td>');
+        document.write('<td>' + predikat + '</td>');
+        document.write('</tr>');
+    }
+
+    document.write('</table>');
+</script>

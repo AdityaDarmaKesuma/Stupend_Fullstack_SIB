@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitung Luas</title>
+</head>
+<body>
+
+    <h1>Menghitung Luas Persegi Panjang dan Lingkaran</h1>
+
+    <script>
+        // Function biasa untuk menghitung luas persegi panjang
+        function luasPersegiPanjang(p, l) {
+            return p * l;
+        }
+
+        // Arrow function untuk menghitung luas lingkaran (menggunakan pendekatan 22/7)
+        const luasLingkaran = r => (22 / 7) * r * r;
+
+        // Parameter panjang, lebar, dan jari-jari
+        let panjang = 32, lebar = 12, jariJari = 9;
+
+        document.write(`Luas Persegi Panjang: ${luasPersegiPanjang(panjang, lebar)} m²` + "<br/>");
+        document.write(`Luas Lingkaran: ${luasLingkaran(jariJari).toFixed(2)} m²`);
+    </script>
+    <br>
+    <br>
+    <br>
+
+    <footer>
+        &copy; 2024 Aditya.
+    </footer>
+</body>
+</html>

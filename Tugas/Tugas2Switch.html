@@ -1,0 +1,32 @@
+<script>
+    let pegawai = "Budi Santoso";
+    let golongan = 2;
+    let menikah = true; // true jika sudah menikah, false jika belum
+    let gaji = 0;
+    let tunjangan = 0;
+    let gajiBersih = 0;
+
+    switch (golongan) {
+        case 1:
+            gaji = 10000000;
+            break;
+        case 2:
+            gaji = 15000000;
+            if (menikah) {
+                tunjangan = 2000000;
+            }
+            break;
+        case 3:
+            gaji = 20000000;
+            break;
+        default:
+            document.write("Golongan tidak valid");
+            break;
+    }
+
+    gajiBersih = gaji + tunjangan;
+
+    if (gaji > 0) {
+        document.write("Pegawai atas nama : " + pegawai + "<br/>" + "Golongan : " + golongan + "<br/>" + "Gaji Bersih : Rp " + gajiBersih);
+    }
+</script>
