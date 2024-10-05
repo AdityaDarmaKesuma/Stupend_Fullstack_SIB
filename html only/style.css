@@ -1,0 +1,18 @@
+h2 {
+  color: red;
+  text-align: justify;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15pt;
+}
+
+body {
+  background-color: aquamarine;
+}
+
+#tulisan {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: brown;
+  font-weight: bold;
+  text-align: center;
+  padding: 10;
+}

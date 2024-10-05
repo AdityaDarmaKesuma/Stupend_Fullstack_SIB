@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Pemesanan Tiket Travel</title>
+    <style></style>
+  </head>
+  <body>
+    <h1>Form Pemesanan Tiket Travel</h1>
+    <form action="" method="post">
+      <!-- nama lengkap -->
+      <label for="fullname">Nama Lengkap:</label>
+      <input
+        type="text"
+        name="fullname"
+        id="fullname"
+        required
+        placeholder="Maukkan nama lengkap"
+      />
+      <br /><br />
+
+      <!-- Email -->
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        required
+        placeholder="Maukkan Email"
+      />
+      <br /><br />
+
+      <!-- Nomer Telpon -->
+      <label for="phone">Nomor Telpon:</label>
+      <input
+        type="tel"
+        name="phone"
+        id="phone"
+        required
+        placeholder="Masukkan Nomor Telpon"
+      />
+      <br /><br />
+
+      <!-- Rute Perjalanan -->
+      <label for="route">Rute Perjalanan:</label>
+      <select name="route" id="route">
+        <option value="">Pilih Rute</option>
+        <option value="Jakarta - Bandung">Jakarta - Bandung</option>
+        <option value="Bandung - Surabaya">Bandung - Surabaya</option>
+        <option value="Jakarta - Yogyakarta">Jakarta - Yogyakarta</option>
+      </select>
+      <br /><br />
+
+      <!-- Tanggal Keberangkatan -->
+      <label for="departure-date">Tanggal Keberangkatan:</label>
+      <input type="date" name="departure-date" id="departure-date" required />
+      <br /><br />
+
+      <!-- Waktu Keberangkatam -->
+      <label for="departure-time">Waktu Keberangkatan:</label>
+      <select name="departure-time" id="departure-time" required>
+        <option value="08:00">08:00</option>
+        <option value="12:00">12:00</option>
+        <option value="18:00">18:00</option>
+      </select>
+      <br /><br />
+
+      <!-- Jumlah Penumpang -->
+      <label for="passengers">Jumlah Penumpang:</label>
+      <input
+        type="number"
+        name="passengers"
+        id="passengers"
+        required
+        min="1"
+        max="6"
+        required-value="1"
+      />
+      <br /><br />
+
+      <!-- Metode Pembayaran -->
+      <label for="Payment">Metode Pembayaram:</label>
+      <select name="Payment" id="Payment" required>
+        <option value="">Pilih Metode Pembayaram</option>
+        <option value="Tranfer-bank">Transfer Bank</option>
+        <option value="Kartu-kredit">Kartu Kedit</option>
+        <option value="e-wallet">E-wallet</option>
+      </select>
+      <br /><br />
+
+      <!-- Persetujuan Syarat dan Ketentuan -->
+      <label>
+        <input type="checkbox" name="terms" id="" required />
+        Syarat dan Ketentuan
+      </label>
+      <br /><br />
+
+      <!-- Tombol Submit -->
+      <button type="submit">Pesan Tiket</button>
+    </form>
+  </body>
+</html>
