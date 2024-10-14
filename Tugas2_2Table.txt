@@ -1,0 +1,119 @@
+Microsoft Windows [Version 10.0.19045.5011]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\MAHADI>cd C:\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| sib7               |
+| test               |
++--------------------+
+6 rows in set (0.052 sec)
+
+MariaDB [(none)]> use sib7;
+Database changed
+MariaDB [sib7]> show tables;
++----------------+
+| Tables_in_sib7 |
++----------------+
+| jenis          |
+| produk         |
++----------------+
+2 rows in set (0.001 sec)
+
+MariaDB [sib7]> CREATE TABLE vendor (
+    ->     id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     nomor VARCHAR(20) NOT NULL UNIQUE,
+    ->     nama VARCHAR(100) NOT NULL,
+    ->     kode VARCHAR(10) NOT NULL UNIQUE,
+    ->     alamat TEXT NOT NULL,
+    ->     kontak VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.054 sec)
+
+MariaDB [sib7]> select * from vendor;
+Empty set (0.089 sec)
+
+MariaDB [sib7]> show tables;
++----------------+
+| Tables_in_sib7 |
++----------------+
+| jenis          |
+| produk         |
+| vendor         |
++----------------+
+3 rows in set (0.001 sec)
+
+MariaDB [sib7]> CREATE TABLE pembelian (
+    ->     id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     tanggal DATE NOT NULL,
+    ->     nomor VARCHAR(20) NOT NULL UNIQUE,
+    ->     produk_id INT NOT NULL,
+    ->     jumlah INT NOT NULL,
+    ->     harga DOUBLE NOT NULL,
+    ->     vendor_id INT NOT NULL,
+    ->     FOREIGN KEY (produk_id) REFERENCES produk(id),
+    ->     FOREIGN KEY (vendor_id) REFERENCES vendor(id)
+    -> );
+Query OK, 0 rows affected (0.064 sec)
+
+MariaDB [sib7]> show tables;
++----------------+
+| Tables_in_sib7 |
++----------------+
+| jenis          |
+| pembelian      |
+| produk         |
+| vendor         |
++----------------+
+4 rows in set (0.001 sec)
+
+MariaDB [sib7]> INSERT INTO vendor (nomor, nama, kode, alamat, kontak) VALUES('01', 'PT. NFACADEMY', 'EJ001', 'Lenteng Agung, Depok', '021-1234567'),('02', 'CV. Makanan Sehat', 'MS002', 'Jl. Pahlawan No.2, Bandung', '022-7654321'),('03', 'UD. Nutrisari', 'NS003', 'Jl. Raya Timur No.3, Surabaya', '031-6543210'),('VN004', 'PT. Planet Stationery', 'PS004', 'Jl. Sentosa No.4, Medan', '061-9876543'),('VN005', 'PT. Kursi Nyaman', 'KN005', 'Jl. Sudirman No.5, Yogyakarta', '0274-543210');
+Query OK, 5 rows affected (0.003 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [sib7]> INSERT INTO pembelian (tanggal, nomor, produk_id, jumlah, harga, vendor_id) VALUES('2024-10-10', 'PB001', 1, 5, 2900000, 1),('2024-10-11', 'PB002', 2, 50, 18000, 2),('2024-10-12', 'PB003', 3, 40, 14000, 3),('2024-10-13', 'PB004', 4, 10, 380000, 4),('2024-10-14', 'PB005', 5, 20, 380000, 5);
+Query OK, 5 rows affected (0.019 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [sib7]> SELECT * FROM vendor;
++----+-------+-----------------------+-------+-------------------------------+-------------+
+| id | nomor | nama                  | kode  | alamat                        | kontak      |
++----+-------+-----------------------+-------+-------------------------------+-------------+
+|  1 | 01    | PT. NFACADEMY         | EJ001 | Lenteng Agung, Depok          | 021-1234567 |
+|  2 | 02    | CV. Makanan Sehat     | MS002 | Jl. Pahlawan No.2, Bandung    | 022-7654321 |
+|  3 | 03    | UD. Nutrisari         | NS003 | Jl. Raya Timur No.3, Surabaya | 031-6543210 |
+|  4 | VN004 | PT. Planet Stationery | PS004 | Jl. Sentosa No.4, Medan       | 061-9876543 |
+|  5 | VN005 | PT. Kursi Nyaman      | KN005 | Jl. Sudirman No.5, Yogyakarta | 0274-543210 |
++----+-------+-----------------------+-------+-------------------------------+-------------+
+5 rows in set (0.000 sec)
+
+MariaDB [sib7]> select * from pembelian;
++----+------------+-------+-----------+--------+---------+-----------+
+| id | tanggal    | nomor | produk_id | jumlah | harga   | vendor_id |
++----+------------+-------+-----------+--------+---------+-----------+
+|  1 | 2024-10-10 | PB001 |         1 |      5 | 2900000 |         1 |
+|  2 | 2024-10-11 | PB002 |         2 |     50 |   18000 |         2 |
+|  3 | 2024-10-12 | PB003 |         3 |     40 |   14000 |         3 |
+|  4 | 2024-10-13 | PB004 |         4 |     10 |  380000 |         4 |
+|  5 | 2024-10-14 | PB005 |         5 |     20 |  380000 |         5 |
++----+------------+-------+-----------+--------+---------+-----------+
+5 rows in set (0.000 sec)
+
+MariaDB [sib7]>
