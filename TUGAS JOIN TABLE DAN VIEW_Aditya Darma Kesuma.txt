@@ -1,0 +1,197 @@
+Microsoft Windows [Version 10.0.19045.5011]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\MAHADI>cd \xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 9
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use dbpossib7;
+Database changed
+MariaDB [dbpossib7]>
+
+TUGAS WORKSHEET 4 JOIN TABLE DAN VIEW
+
+1).
+MariaDB [dbpossib7]> select pesanan.id as id,
+    -> pesanan.tanggal,
+    -> pesanan.total,
+    -> pelanggan.kode as kode,
+    -> pelanggan.nama as nama,
+    -> kartu.nama as 'nama kartu',
+    -> kartu.diskon FROM pesanan
+    -> JOIN pelanggan ON pesanan.pelanggan_id = pelanggan.id
+    -> JOIN kartu ON pelanggan.kartu_id = kartu.id;
++----+------------+---------+------+---------------+---------------+--------+
+| id | tanggal    | total   | kode | nama          | nama kartu    | diskon |
++----+------------+---------+------+---------------+---------------+--------+
+|  1 | 2015-11-04 | 9720000 | C001 | Agung Sedayu  | Gold Utama    |   0.05 |
+|  2 | 2015-11-04 |   17500 | C003 | Sekar Mirah   | Gold Utama    |   0.05 |
+|  3 | 2015-11-04 |       0 | C006 | Gayatri Dwi   | Gold Utama    |   0.05 |
+|  4 | 2015-11-04 |       0 | C007 | Dewi Gyat     | Gold Utama    |   0.05 |
+|  5 | 2015-11-04 |       0 | C010 | Cassanndra    | Gold Utama    |   0.05 |
+|  6 | 2015-11-04 |   60000 | C002 | Pandan Wangi  | Platinum Jaya |    0.1 |
+|  7 | 2015-11-04 |       0 | C005 | Pradabashu    | Platinum Jaya |    0.1 |
+|  8 | 2015-11-04 |       0 | C004 | Swandaru Geni | Non Member    |      0 |
+|  9 | 2015-11-04 |       0 | C008 | Andre Haru    | Non Member    |      0 |
+| 10 | 2015-11-04 |       0 | C009 | Ahmad Hasan   | Non Member    |      0 |
+| 11 | 2021-05-31 | 1200000 | C003 | Sekar Mirah   | Gold Utama    |   0.05 |
+| 13 | 2023-08-06 |      40 | C001 | Agung Sedayu  | Gold Utama    |   0.05 |
+| 14 | 2023-01-01 |   20000 | C002 | Pandan Wangi  | Platinum Jaya |    0.1 |
++----+------------+---------+------+---------------+---------------+--------+
+13 rows in set (0.001 sec)
+
+MariaDB [dbpossib7]> create VIEW pes_pel_kar AS
+    -> select pesanan.id as id,
+    -> pesanan.tanggal,
+    -> pesanan.total,
+    -> pelanggan.kode as kode,
+    -> pelanggan.nama as nama,
+    -> kartu.nama as 'nama kartu',
+    -> kartu.diskon FROM pesanan
+    -> JOIN pelanggan ON pesanan.pelanggan_id = pelanggan.id
+    -> JOIN kartu ON pelanggan.kartu_id = kartu.id;
+Query OK, 0 rows affected (0.014 sec)
+
+MariaDB [dbpossib7]> select * from pes_pel_kar;
++----+------------+---------+------+---------------+---------------+--------+
+| id | tanggal    | total   | kode | nama          | nama kartu    | diskon |
++----+------------+---------+------+---------------+---------------+--------+
+|  1 | 2015-11-04 | 9720000 | C001 | Agung Sedayu  | Gold Utama    |   0.05 |
+|  2 | 2015-11-04 |   17500 | C003 | Sekar Mirah   | Gold Utama    |   0.05 |
+|  3 | 2015-11-04 |       0 | C006 | Gayatri Dwi   | Gold Utama    |   0.05 |
+|  4 | 2015-11-04 |       0 | C007 | Dewi Gyat     | Gold Utama    |   0.05 |
+|  5 | 2015-11-04 |       0 | C010 | Cassanndra    | Gold Utama    |   0.05 |
+|  6 | 2015-11-04 |   60000 | C002 | Pandan Wangi  | Platinum Jaya |    0.1 |
+|  7 | 2015-11-04 |       0 | C005 | Pradabashu    | Platinum Jaya |    0.1 |
+|  8 | 2015-11-04 |       0 | C004 | Swandaru Geni | Non Member    |      0 |
+|  9 | 2015-11-04 |       0 | C008 | Andre Haru    | Non Member    |      0 |
+| 10 | 2015-11-04 |       0 | C009 | Ahmad Hasan   | Non Member    |      0 |
+| 11 | 2021-05-31 | 1200000 | C003 | Sekar Mirah   | Gold Utama    |   0.05 |
+| 13 | 2023-08-06 |      40 | C001 | Agung Sedayu  | Gold Utama    |   0.05 |
+| 14 | 2023-01-01 |   20000 | C002 | Pandan Wangi  | Platinum Jaya |    0.1 |
++----+------------+---------+------+---------------+---------------+--------+
+13 rows in set (0.001 sec)
+
+
+2).
+MariaDB [dbpossib7]> select pembelian.id as id,
+    -> pembelian.tanggal,
+    -> pembelian.nomor,
+    -> pembelian.jumlah,
+    -> pembelian.harga,
+    -> produk.nama as nama,
+    -> vendor.nama as nama,
+    -> vendor.kontak
+    -> FROM pembelian
+    -> JOIN produk ON pembelian.produk_id = produk.id
+    -> JOIN vendor ON pembelian.vendor_id = vendor.id;
++----+------------+-------+--------+---------+------------------+----------------------+-----------------+
+| id | tanggal    | nomor | jumlah | harga   | nama             | nama                 | kontak          |
++----+------------+-------+--------+---------+------------------+----------------------+-----------------+
+|  1 | 2019-10-10 | P001  |      2 | 3500000 | Televisi 21 inch | PT Guna Samudra      | Ali Nurdin      |
+|  2 | 2019-11-20 | P002  |      5 | 5500000 | Televisi 40 inch | PT Pondok C9         | Putri Ramadhani |
+|  3 | 2019-12-12 | P003  |      5 | 5400000 | Televisi 40 inch | PT Guna Samudra      | Ali Nurdin      |
+|  4 | 2020-01-20 | P004  |    200 |    1800 | Teh Botol        | CV Jaya Raya Semesta | Dwi Rahayu      |
+|  5 | 2020-01-20 | P005  |    100 |    2300 | Teh Kotak        | CV Jaya Raya Semesta | Dwi Rahayu      |
++----+------------+-------+--------+---------+------------------+----------------------+-----------------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbpossib7]> create VIEW pem_pro_ven AS
+    -> select pembelian.id as id,
+    -> pembelian.tanggal,
+    -> pembelian.nomor,
+    -> pembelian.jumlah,
+    -> pembelian.harga,
+    -> produk.nama as nama_produk,
+    -> vendor.nama as nama_vendor,
+    -> vendor.kontak
+    -> FROM pembelian
+    -> JOIN produk ON pembelian.produk_id = produk.id
+    -> JOIN vendor ON pembelian.vendor_id = vendor.id;
+Query OK, 0 rows affected (0.013 sec)
+
+MariaDB [dbpossib7]> select * from pem_pro_ven;
++----+------------+-------+--------+---------+------------------+----------------------+-----------------+
+| id | tanggal    | nomor | jumlah | harga   | nama_produk      | nama_vendor          | kontak          |
++----+------------+-------+--------+---------+------------------+----------------------+-----------------+
+|  1 | 2019-10-10 | P001  |      2 | 3500000 | Televisi 21 inch | PT Guna Samudra      | Ali Nurdin      |
+|  2 | 2019-11-20 | P002  |      5 | 5500000 | Televisi 40 inch | PT Pondok C9         | Putri Ramadhani |
+|  3 | 2019-12-12 | P003  |      5 | 5400000 | Televisi 40 inch | PT Guna Samudra      | Ali Nurdin      |
+|  4 | 2020-01-20 | P004  |    200 |    1800 | Teh Botol        | CV Jaya Raya Semesta | Dwi Rahayu      |
+|  5 | 2020-01-20 | P005  |    100 |    2300 | Teh Kotak        | CV Jaya Raya Semesta | Dwi Rahayu      |
++----+------------+-------+--------+---------+------------------+----------------------+-----------------+
+5 rows in set (0.002 sec)
+
+3).
+MariaDB [dbpossib7]> SELECT pesanan.id AS id_pesanan,
+    -> pesanan.tanggal,
+    -> pesanan.total,
+    -> pelanggan.nama AS nama_pelanggan,
+    -> produk.kode AS kode_produk,
+    -> produk.nama AS nama_produk,
+    -> jenis_produk.nama AS jenis_produk,
+    -> pesanan_items.qty,
+    -> pesanan_items.harga -- Sesuaikan nama kolom
+    -> FROM pesanan
+    -> JOIN pelanggan ON pesanan.pelanggan_id = pelanggan.id
+    -> JOIN pesanan_items ON pesanan.id = pesanan_items.pesanan_id
+    -> JOIN produk ON pesanan_items.produk_id = produk.id
+    -> JOIN jenis_produk ON produk.jenis_produk_id = jenis_produk.id;
++------------+------------+---------+----------------+-------------+------------------+--------------+------+---------+
+| id_pesanan | tanggal    | total   | nama_pelanggan | kode_produk | nama_produk      | jenis_produk | qty  | harga   |
++------------+------------+---------+----------------+-------------+------------------+--------------+------+---------+
+|          1 | 2015-11-04 | 9720000 | Agung Sedayu   | TV01        | Televisi 21 inch | elektronik   |    1 | 5040000 |
+|          1 | 2015-11-04 | 9720000 | Agung Sedayu   | K001        | Kulkas 2 pintu   | elektronik   |    1 | 4680000 |
+|          3 | 2015-11-04 |       0 | Gayatri Dwi    | TV01        | Televisi 21 inch | elektronik   |    1 | 5040000 |
+|         11 | 2021-05-31 | 1200000 | Sekar Mirah    | M001        | Meja Makan       | furniture    |    2 |  600000 |
+|          2 | 2015-11-04 |   17500 | Sekar Mirah    | TK01        | Teh Kotak        | minuman      |    5 |    3500 |
+|          3 | 2015-11-04 |       0 | Gayatri Dwi    | TK01        | Teh Kotak        | minuman      |   10 |    3500 |
+|          5 | 2015-11-04 |       0 | Cassanndra     | TK01        | Teh Kotak        | minuman      |   10 |    3500 |
+|          6 | 2015-11-04 |   60000 | Pandan Wangi   | TK01        | Teh Kotak        | minuman      |   20 |    3500 |
+|          6 | 2015-11-04 |   60000 | Pandan Wangi   | TB01        | Teh Botol        | minuman      |    1 |   30000 |
++------------+------------+---------+----------------+-------------+------------------+--------------+------+---------+
+9 rows in set (0.001 sec)
+
+MariaDB [dbpossib7]> create VIEW pes_pel_pro AS
+    -> SELECT pesanan.id AS id_pesanan,
+    -> pesanan.tanggal,
+    -> pesanan.total,
+    -> pelanggan.nama AS nama_pelanggan,
+    -> produk.kode AS kode_produk,
+    -> produk.nama AS nama_produk,
+    -> jenis_produk.nama AS jenis_produk,
+    -> pesanan_items.qty,
+    -> pesanan_items.harga -- Sesuaikan nama kolom
+    -> FROM pesanan
+    -> JOIN pelanggan ON pesanan.pelanggan_id = pelanggan.id
+    -> JOIN pesanan_items ON pesanan.id = pesanan_items.pesanan_id
+    -> JOIN produk ON pesanan_items.produk_id = produk.id
+    -> JOIN jenis_produk ON produk.jenis_produk_id = jenis_produk.id;
+Query OK, 0 rows affected (0.014 sec)
+
+MariaDB [dbpossib7]> select * from pes_pel_pro;
++------------+------------+---------+----------------+-------------+------------------+--------------+------+---------+
+| id_pesanan | tanggal    | total   | nama_pelanggan | kode_produk | nama_produk      | jenis_produk | qty  | harga   |
++------------+------------+---------+----------------+-------------+------------------+--------------+------+---------+
+|          1 | 2015-11-04 | 9720000 | Agung Sedayu   | TV01        | Televisi 21 inch | elektronik   |    1 | 5040000 |
+|          1 | 2015-11-04 | 9720000 | Agung Sedayu   | K001        | Kulkas 2 pintu   | elektronik   |    1 | 4680000 |
+|          3 | 2015-11-04 |       0 | Gayatri Dwi    | TV01        | Televisi 21 inch | elektronik   |    1 | 5040000 |
+|         11 | 2021-05-31 | 1200000 | Sekar Mirah    | M001        | Meja Makan       | furniture    |    2 |  600000 |
+|          2 | 2015-11-04 |   17500 | Sekar Mirah    | TK01        | Teh Kotak        | minuman      |    5 |    3500 |
+|          3 | 2015-11-04 |       0 | Gayatri Dwi    | TK01        | Teh Kotak        | minuman      |   10 |    3500 |
+|          5 | 2015-11-04 |       0 | Cassanndra     | TK01        | Teh Kotak        | minuman      |   10 |    3500 |
+|          6 | 2015-11-04 |   60000 | Pandan Wangi   | TK01        | Teh Kotak        | minuman      |   20 |    3500 |
+|          6 | 2015-11-04 |   60000 | Pandan Wangi   | TB01        | Teh Botol        | minuman      |    1 |   30000 |
++------------+------------+---------+----------------+-------------+------------------+--------------+------+---------+
+9 rows in set (0.001 sec)
+
+
+
