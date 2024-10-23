@@ -1,0 +1,203 @@
+Microsoft Windows [Version 10.0.19045.5011]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\MAHADI>cd \xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use dbpossib7;
+Database changed
+MariaDB [dbpossib7]>
+MariaDB [dbpossib7]>
+
+TUGAS WORKSHEET 6 
+6.1
+No. 3
+MariaDB [dbpossib7]> DELIMITER ;
+MariaDB [dbpossib7]> DELIMITER $$
+MariaDB [dbpossib7]> create function kategori_harga(harga DOUBLE)
+    -> RETURNS VARCHAR(20)
+    -> DETERMINISTIC
+    -> BEGIN
+    -> DECLARE kategori VARCHAR(20);
+    -> IF harga BETWEEN 0 AND 500000 THEN
+    -> SET kategori = 'murah';
+    -> ELSEIF harga BETWEEN 500001 AND 3000000 THEN
+    -> SET kategori = 'sedang';
+    -> ELSEIF harga BETWEEN 3000001 AND 10000000 THEN
+    -> SET kategori = 'mahal';
+    -> ELSEIF harga > 10000000 THEN
+    -> SET kategori = 'sangat mahal';
+    -> END IF;
+    -> RETURN kategori;
+    -> END $$
+Query OK, 0 rows affected (0.019 sec)
+MariaDB [dbpossib7]>
+MariaDB [dbpossib7]> DELIMITER ;
+MariaDB [dbpossib7]> select pesanan.id AS id_pesanan,
+    -> pesanan.tanggal,
+    -> pesanan.total,
+    -> pelanggan.nama AS nama_pelanggan,
+    -> produk.kode AS kode_produk,
+    -> produk.nama AS nama_produk,
+    -> jenis_produk.nama AS jenis_produk,
+    -> pesanan_items.qty,
+    -> pesanan_items.harga,
+    -> kategori_harga(pesanan_items.harga) AS kategori_harga
+    -> FROM pesanan
+    -> JOIN pelanggan ON pesanan.pelanggan_id = pelanggan.id
+    -> JOIN pesanan_items ON pesanan.id = pesanan_items.pesanan_id
+    -> JOIN produk ON pesanan_items.produk_id = produk.id
+    -> JOIN jenis_produk ON produk.jenis_produk_id = jenis_produk.id;
+    -> $$
++------------+------------+---------+----------------+-------------+------------------+--------------+------+---------+----------------+
+| id_pesanan | tanggal    | total   | nama_pelanggan | kode_produk | nama_produk      | jenis_produk | qty  | harga   | kategori_harga |
++------------+------------+---------+----------------+-------------+------------------+--------------+------+---------+----------------+
+|          1 | 2015-11-04 | 9720000 | Agung Sedayu   | TV01        | Televisi 21 inch | elektronik   |    1 | 5040000 | mahal          |
+|          1 | 2015-11-04 | 9720000 | Agung Sedayu   | K001        | Kulkas 2 pintu   | elektronik   |    1 | 4680000 | mahal          |
+|          3 | 2015-11-04 |       0 | Gayatri Dwi    | TV01        | Televisi 21 inch | elektronik   |    1 | 5040000 | mahal          |
+|         11 | 2021-05-31 | 1200000 | Sekar Mirah    | M001        | Meja Makan       | furniture    |    2 |  600000 | sedang         |
+|          2 | 2015-11-04 |   17500 | Sekar Mirah    | TK01        | Teh Kotak        | minuman      |    5 |    3500 | murah          |
+|          3 | 2015-11-04 |       0 | Gayatri Dwi    | TK01        | Teh Kotak        | minuman      |   10 |    3500 | murah          |
+|          5 | 2015-11-04 |       0 | Cassanndra     | TK01        | Teh Kotak        | minuman      |   10 |    3500 | murah          |
+|          6 | 2015-11-04 |   60000 | Pandan Wangi   | TK01        | Teh Kotak        | minuman      |   20 |    3500 | murah          |
+|          6 | 2015-11-04 |   60000 | Pandan Wangi   | TB01        | Teh Botol        | minuman      |    1 |   30000 | murah          |
++------------+------------+---------+----------------+-------------+------------------+--------------+------+---------+----------------+
+9 rows in set (0.001 sec)
+
+
+
+SOAL 5.2
+NO.1
+MariaDB [dbpossib7]> start transaction;
+Query OK, 0 rows affected (0.000 sec)
+MariaDB [dbpossib7]> INSERT INTO produk (kode, nama, harga_jual, stok, jenis_produk_id)VALUES('PRD006', 'Smartwatch', 1500000, 50, 1),('PRD007', 'Tablet', 3500000, 30, 1),('PRD008', 'Headphone', 500000, 100, 1);
+Query OK, 3 rows affected (0.012 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+MariaDB [dbpossib7]> select * from produk
+    -> ;
++----+--------+------------------+------------+------------+------+----------+-----------------+
+| id | kode   | nama             | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+--------+------------------+------------+------------+------+----------+-----------------+
+|  1 | TV01   | Televisi 21 inch |    3500000 |    5241600 | NULL |        2 |               1 |
+|  2 | TV02   | Televisi 40 inch |    5500000 |    7737600 |    5 |        2 |               1 |
+|  3 | K001   | Kulkas 2 pintu   |    3500000 |    4867200 |    0 |        2 |               1 |
+|  4 | M001   | Meja Makan       |     500000 |     660000 |    6 |        3 |               2 |
+|  5 | TK01   | Teh Kotak        |       3000 |       4235 |    0 |       10 |               4 |
+|  6 | PC01   | PC Desktop HP    |    7000000 |    9600000 |    3 |        2 |               5 |
+|  7 | TB01   | Teh Botol        |       2000 |       3025 |   39 |       10 |               4 |
+|  8 | AC01   | Notebook Acer    |    8000000 |   10800000 |    1 |        2 |               5 |
+|  9 | LN01   | Notebook Lenovo  |    9000000 |   12000000 |    3 |        2 |               5 |
+| 11 | PRD006 | Smartwatch       |       NULL |    1500000 |   50 |     NULL |               1 |
+| 12 | PRD007 | Tablet           |       NULL |    3500000 |   30 |     NULL |               1 |
+| 13 | PRD008 | Headphone        |       NULL |     500000 |  100 |     NULL |               1 |
++----+--------+------------------+------------+------------+------+----------+-----------------+
+12 rows in set (0.000 sec)
+MariaDB [dbpossib7]> UPDATE produk SET stok = stok + 20 WHERE kode = 'PRD006';
+Query OK, 1 row affected (0.010 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+MariaDB [dbpossib7]> select kode, nama, stok FROM produk WHERE kode = 'PRD006';
++--------+------------+------+
+| kode   | nama       | stok |
++--------+------------+------+
+| PRD006 | Smartwatch |   70 |
++--------+------------+------+
+1 row in set (0.001 sec)
+MariaDB [dbpossib7]> SAVEPOINT sebelum_hapus_pembayaran;
+Query OK, 0 rows affected (0.000 sec)
+MariaDB [dbpossib7]> SAVEPOINT sebelum_hapus_pembayaran;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [dbpossib7]> DELETE FROM pembayaran WHERE id = 5;
+Query OK, 1 row affected (0.022 sec)
+
+MariaDB [dbpossib7]> SELECT * FROM pembayaran WHERE id = 5;
+Empty set (0.001 sec)
+MariaDB [dbpossib7]> select * from pembayaran;
++----+------------+------------+----------+------+------------+-------------------+
+| id | nokuitansi | tanggal    | jumlah   | ke   | pesanan_id | status_pembayaran |
++----+------------+------------+----------+------+------------+-------------------+
+|  1 | M001       | 2023-05-12 | 10000000 |    1 |          1 | belum lunas       |
+|  2 | M002       | 2023-06-12 |    18000 |    1 |          2 | belum lunas       |
+|  4 | M0011      | 2023-06-12 |    19000 |    1 |          2 | Lunas             |
+|  6 | M0013      | 2023-06-12 |  1900000 |    1 |         11 | Lunas             |
+|  7 | M0014      | 2023-06-12 |     1900 |    1 |         11 | Lunas             |
+|  8 | M0015      | 2023-06-12 |       20 |    1 |         13 | NULL              |
+|  9 | M0016      | 0000-00-00 |    10000 |    1 |         14 | NULL              |
++----+------------+------------+----------+------+------------+-------------------+
+7 rows in set (0.000 sec)
+MariaDB [dbpossib7]> ROLLBACK TO sebelum_hapus_pembayaran;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [dbpossib7]> select * from pembayaran;
++----+------------+------------+----------+------+------------+-------------------+
+| id | nokuitansi | tanggal    | jumlah   | ke   | pesanan_id | status_pembayaran |
++----+------------+------------+----------+------+------------+-------------------+
+|  1 | M001       | 2023-05-12 | 10000000 |    1 |          1 | belum lunas       |
+|  2 | M002       | 2023-06-12 |    18000 |    1 |          2 | belum lunas       |
+|  4 | M0011      | 2023-06-12 |    19000 |    1 |          2 | Lunas             |
+|  5 | M0012      | 2023-06-12 |    19000 |    1 |         11 | NULL              |
+|  6 | M0013      | 2023-06-12 |  1900000 |    1 |         11 | Lunas             |
+|  7 | M0014      | 2023-06-12 |     1900 |    1 |         11 | Lunas             |
+|  8 | M0015      | 2023-06-12 |       20 |    1 |         13 | NULL              |
+|  9 | M0016      | 0000-00-00 |    10000 |    1 |         14 | NULL              |
++----+------------+------------+----------+------+------------+-------------------+
+8 rows in set (0.001 sec)
+MariaDB [dbpossib7]> select * from kartu;
++----+------+---------------+--------+--------+
+| id | kode | nama          | diskon | iuran  |
++----+------+---------------+--------+--------+
+|  1 | GOLD | Gold Utama    |   0.05 | 100000 |
+|  2 | PLAT | Platinum Jaya |    0.1 | 150000 |
+|  3 | SLV  | Silver        |  0.025 |  50000 |
+|  4 | NO   | Non Member    |      0 |      0 |
+|  6 | NOT  | NOT Member    |      0 |      0 |
+|  7 | DM   | Diamond       |     10 |  20000 |
++----+------+---------------+--------+--------+
+6 rows in set (0.022 sec)
+MariaDB [dbpossib7]> UPDATE kartu SET iuran = iuran + 50000 WHERE id = 2;
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpossib7]> select * from kartu;
++----+------+---------------+--------+--------+
+| id | kode | nama          | diskon | iuran  |
++----+------+---------------+--------+--------+
+|  1 | GOLD | Gold Utama    |   0.05 | 100000 |
+|  2 | PLAT | Platinum Jaya |    0.1 | 200000 |
+|  3 | SLV  | Silver        |  0.025 |  50000 |
+|  4 | NO   | Non Member    |      0 |      0 |
+|  6 | NOT  | NOT Member    |      0 |      0 |
+|  7 | DM   | Diamond       |     10 |  20000 |
++----+------+---------------+--------+--------+
+6 rows in set (0.001 sec)
+MariaDB [dbpossib7]> commit;
+Query OK, 0 rows affected (0.002 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
