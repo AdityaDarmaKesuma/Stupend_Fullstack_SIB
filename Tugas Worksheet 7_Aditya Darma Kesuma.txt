@@ -80,4 +80,4 @@ Query OK, 0 rows affected (0.035 sec)
 
 MariaDB [dbpossib7]> DELIMITER ;
 
-
+https://github.com/AdityaDarmaKesuma/Stupend_Fullstack_SIB/blob/main/Tugas%20Worksheet%207_Aditya%20Darma%20Kesuma.txt
